@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-web-app
+  labels:
+    app: my-web-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-web-app
+  template:
+    metadata:
+      labels:
+        app: my-web-app
+    spec:
+      containers:
+      - name: my-web-app
+        image: ebruskokos/my_web_app:8ba84dbdea83e83e1f21d6b1fb903da6fcbbefbb
+        ports:
+        - containerPort: 80
+        env:
+        - name: DD_API_KEY
+          value: b6e7427497cf655e565e39a941dbe01e
+        - name: DD_APM_ENABLED
+          value: "true"
+      dnsPolicy: ClusterFirst
+      hostNetwork: true
